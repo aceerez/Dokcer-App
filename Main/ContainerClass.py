@@ -67,8 +67,8 @@ class Container:
             self.contTreViw.delete(i)
         os.system('docker ps -a > dockerList.dat')
         try:
-            # df = pd.read_csv("dockerList.dat")
-            df = pd.read_csv("imagedata.txt")
+            df = pd.read_csv("dockerList.dat")
+            
         except ValueError:
             tk.messagebox.showerror("Information", "The File you have entered is invalid")
             return None
