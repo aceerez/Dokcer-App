@@ -107,7 +107,8 @@ class Container:
 
     def RunContainer(self):
         contID = self.GetContID()
-        os.system('docker exec -it  {0} bash'.format(contID))
+        messagebox.showinfo("Running Container","To EXIT the Container and returning to the app type 'Exit' in the terminal ")
+        os.system('gnome-terminal -- bash -c "docker exec -it  {0} bash; exec bash"'.format(contID))
 
 
     ###Container Right click menu ###
