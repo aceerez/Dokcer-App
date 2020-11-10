@@ -52,31 +52,29 @@ class Container:
         return selectedCont[38:50]
 
     def GetContainerList(self):
-        for i in self.contTreViw.get_children ():  # clear the old list form screen
-            self.contTreViw.delete (i)
-        os.system ('docker ps -a > dockerList.dat')
-        """ if your file is valid this will load the file into the treeview"""
+        for i in self.contTreViw.get_children():  # clear the old list form screen
+            self.contTreViw.delete(i)
+        os.system('docker ps -a > dockerList.dat')
         try:
             # df = pd.read_csv("dockerList.dat")
-            df = pd.read_csv ("imagedata.txt")
+            df = pd.read_csv("dockerList.dat")
         except ValueError:
-            tk.messagebox.showerror ("Information", "The File you have entered is invalid")
+            tk.messagebox.showerror("Information", "The File you have entered is invalid")
             return None
 
-        df_rows = df.to_numpy ().tolist ()  # turns the dataframe into a list of lists
+        df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
         for row in df_rows:
-            self.contTreViw.insert ("", "end", values=row)  # inserts each list into the treeview
-        ckListempty = "1"
-        self.contInfoLbl.configure (text="Please Choose a Container and right Click to select Action")
+            self.contTreViw.insert("", "end", values=row)  # inserts each list into the treeview
+        self.contInfoLbl.configure(text="Please Choose a Container and right Click to select Action")
 
     def StopStartContainer(self):
-        contID = self.GetContID ()
-        os.system ('docker exec -it  {0} bash'.format (contID))
-        print (contID)
+        contID = self.GetContID()
+        os.system('docker exec -it  {0} bash'.format(contID))
+        print(contID)
 
     def PauseUnpausecontainer(self):
-        contID = self.GetContID ()
-        os.system ('docker exec -it  {0} bash'.format (contID))
+        contID = self.GetContID()
+        os.system('docker exec -it  {0} bash'.format(contID))
         pass
 
     def DeleteContainer(self):
