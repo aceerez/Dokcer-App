@@ -54,8 +54,9 @@ class Container:
 
     def ContainerStatus(self):
         continaerStatus = str(self.contTreViw.item(self.contTreViw.focus()))
+        paused = continaerStatus.find("Paused")
         if continaerStatus[123:125] == "Up":
-            if continaerStatus[138: 144] == "Paused":
+            if continaerStatus[paused:(paused+6)] == "Paused":
                 return "Paused"
             else:
                 return "Up"
@@ -68,7 +69,7 @@ class Container:
         os.system('docker ps -a > dockerList.dat')
         try:
             df = pd.read_csv("dockerList.dat")
-            
+
         except ValueError:
             tk.messagebox.showerror("Information", "The File you have entered is invalid")
             return None
