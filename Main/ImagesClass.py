@@ -64,7 +64,7 @@ class Images:
     def GetImageList(self):
         for i in self.imagTreViw.get_children ():  # clear the old list form screen
             self.imagTreViw.delete (i)
-        os.system('docker images > imageList.dat')
+        os.system('docker images > imagelist.dat')
         try:
             df = pd.read_csv("imagelist.dat")
 
