@@ -66,7 +66,7 @@ class Images:
             self.imagTreViw.delete (i)
         os.system('docker images > imagelist.dat')
         try:
-            df = pd.read_csv("imagelist.dat")
+            df = pd.read_csv("imagelist")
 
         except ValueError:
             tk.messagebox.showerror("Information", "The File you have entered is invalid")
@@ -106,9 +106,9 @@ class Images:
             try:
                 os.system('docker image rm {0}'.format(imageID))
                 self.imagTreViw.delete(self.imagTreViw.selection())
-                self.GetContainerList()
+                self.GetImageList()
             except:
-                messagebox.showerror ("error", "Cannot Delete Container")
+                messagebox.showerror ("error", "Cannot Delete Image")
 
     ###Image Right click menu ###
 
