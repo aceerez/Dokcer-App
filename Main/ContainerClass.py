@@ -54,13 +54,19 @@ class Container:
 
     def ContainerStatus(self):
         continaerStatus = str(self.contTreViw.item(self.contTreViw.focus()))
-        paused = continaerStatus.find("Paused")
-        if continaerStatus[123:125] == "Up":
-            if continaerStatus[paused:(paused+6)] == "Paused":
-                return "Paused"
-            else:
+        pausedPos = continaerStatus.find("Paused")
+        print(pausedPos)
+        upPos = continaerStatus.find("Up")
+        print(upPos)
+        exitedPos = continaerStatus.find("Exited")
+        print(exitedPos)
+        print(continaerStatus)
+        print(continaerStatus[upPos:(upPos+2)],"--------UP------")
+        if continaerStatus[pausedPos:(pausedPos+6)] == "Paused":
+            return "Paused"
+        elif continaerStatus[upPos:(upPos+2)] == "Up":
                 return "Up"
-        else:
+        elif continaerStatus[exitedPos:(exitedPos+6)] == "Exited":
             return "Exited"
 
     def GetContainerList(self):
@@ -118,13 +124,13 @@ class Container:
         print(self.containerStatus)
         if self.GetContID() != ", 'open': 0,":
 
-            if self.ContainerStatus() == "Up":
+            if self.containerStatus == "Up":
                 self.contPopMenu.add_command(label="Stop Container", command=self.StopStartContainer)
                 self.contPopMenu.add_command(label="Pause Container", command=self.PauseUnpausecontainer)
                 self.contPopMenu.add_command(label="Run Container in terminal ", command=self.RunContainer)
-            elif self.ContainerStatus() == "Paused":
+            elif self.containerStatus == "Paused":
                 self.contPopMenu.add_command(label="Unpause Container", command=self.PauseUnpausecontainer)
-            elif self.ContainerStatus() == "Exited":
+            elif self.containerStatus == "Exited":
                 self.contPopMenu.add_command(label="start Container", command=self.StopStartContainer)
 
             self.contPopMenu.add_command(label="Delete Container", command=self.DeleteContainer)
@@ -142,3 +148,4 @@ class Container:
             self.CreatContainerPopMenu()
         self.contPopMenu.tk_popup(e.x_root, e.y_root)
 
+ 
