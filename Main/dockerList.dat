@@ -1,3 +1,3 @@
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                  PORTS               NAMES
-9833cf91e29a        ubuntu              "/bin/bash"         7 days ago          Up 5 seconds (Paused)                       lucid_franklin
-1c404f92861c        centos              "/bin/bash"         7 days ago          Up 3 seconds                                Superman
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+9833cf91e29a        ubuntu              "/bin/bash"         7 days ago          Up 2 hours                              lucid_franklin
+1c404f92861c        centos              "/bin/bash"         7 days ago          Up 2 hours                              Superman

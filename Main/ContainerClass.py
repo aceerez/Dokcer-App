@@ -49,19 +49,13 @@ class Container:
 
     def GetContID(self):
         selectedCont = str(self.contTreViw.item(self.contTreViw.focus()))
-        print(str(self.contTreViw.item(self.contTreViw.focus())))
         return selectedCont[38:50]
 
     def ContainerStatus(self):
         continaerStatus = str(self.contTreViw.item(self.contTreViw.focus()))
         pausedPos = continaerStatus.find("Paused")
-        print(pausedPos)
         upPos = continaerStatus.find("Up")
-        print(upPos)
         exitedPos = continaerStatus.find("Exited")
-        print(exitedPos)
-        print(continaerStatus)
-        print(continaerStatus[upPos:(upPos+2)],"--------UP------")
         if continaerStatus[pausedPos:(pausedPos+6)] == "Paused":
             return "Paused"
         elif continaerStatus[upPos:(upPos+2)] == "Up":
@@ -121,9 +115,7 @@ class Container:
     def CreatContainerPopMenu(self):
         self.DeleteMenu()
         self.containerStatus= self.ContainerStatus()
-        print(self.containerStatus)
         if self.GetContID() != ", 'open': 0,":
-
             if self.containerStatus == "Up":
                 self.contPopMenu.add_command(label="Stop Container", command=self.StopStartContainer)
                 self.contPopMenu.add_command(label="Pause Container", command=self.PauseUnpausecontainer)
