@@ -66,7 +66,7 @@ class Images:
             self.imagTreViw.delete (i)
         os.system('docker images > imageList.dat')
         try:
-            df = pd.read_csv("imagelist")
+            df = pd.read_csv("imagelist.dat")
 
         except ValueError:
             tk.messagebox.showerror("Information", "The File you have entered is invalid")
