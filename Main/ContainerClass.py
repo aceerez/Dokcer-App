@@ -8,7 +8,7 @@ class Container:
 
     def __init__(self, master):
         # This is the frame for the Container Treeview
-        self.contTreeFrame = tk.LabelFrame (master, text="Container list")
+        self.contTreeFrame = tk.LabelFrame (master, text="Container list",labelanchor="n")
         self.contTreeFrame.place (height=250, width=1000)
 
         # This is the frame for the info for container and its action
