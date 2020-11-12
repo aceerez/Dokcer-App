@@ -9,7 +9,7 @@ class Images:
     def __init__(self, master):
 
         # This is the frame for the Images Treeview
-        self.imagTreeFrame = tk.LabelFrame (master, text="Images list")
+        self.imagTreeFrame = tk.LabelFrame (master, text="Images list",labelanchor="n")
         self.imagTreeFrame.place (height=250, width=600, rely=0.6, relx=0.0)
 
         # This is the frame for the info for Images and its action
