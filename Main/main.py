@@ -8,7 +8,7 @@ import ImagesClass
 # initialize the tkinter GUI
 root = tk.Tk ()
 
-root.geometry ("800x800")
+root.geometry ("1000x800")
 root.pack_propagate (0)
 root.resizable (0, 0)
 
