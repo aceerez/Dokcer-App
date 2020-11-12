@@ -11,7 +11,7 @@ class Images:
 
         # This is the frame for the Images Treeview
         self.imagTreeFrame = tk.LabelFrame (master, text="Images list")
-        self.imagTreeFrame.place (height=250, width=800, rely=0.6, relx=0.0)
+        self.imagTreeFrame.place (height=250, width=600, rely=0.6, relx=0.0)
 
         # This is the frame for the info for Images and its action
         self.imagInfoFrame = tk.LabelFrame (master, text="Images INFO")
