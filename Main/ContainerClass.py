@@ -96,7 +96,7 @@ class Container:
         InfoInsert (cmd)
         cmd = "docker ps -a --format '{{.Names}}' > dockerList.dat"
         InfoInsert (cmd)
-
+        return containerlist
 
 
 
