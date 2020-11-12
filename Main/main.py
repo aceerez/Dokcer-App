@@ -20,8 +20,8 @@ imageMenu = ImagesClass.Images(root)
 
 file_menu = Menu(bar_menu)
 bar_menu.add_cascade(label="Actions", menu=file_menu)
-file_menu.add_command(label="Load Container List",command=containerMenu.GetListDate)
-file_menu.add_command(label="Load Image List",command=imageMenu.GetListDate)
+file_menu.add_command(label="Load Container List",command=containerMenu.GetContainerList())
+file_menu.add_command(label="Load Image List",command=imageMenu.GetImageList())
 file_menu.add_separator()
 file_menu.add_command(label="Exit", command=root.quit)
 
