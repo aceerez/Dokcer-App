@@ -88,6 +88,7 @@ class Images:
         InfoInsert (cmd)
         cmd = "docker ps -a --format '{{.Size}}' > dockerList.dat"
         InfoInsert (cmd)
+        return imagelist
 
 
     def GetImageList(self):
