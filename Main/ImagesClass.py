@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk, filedialog, messagebox, simpledialog
-import pandas as pd
 import os
 import ContainerClass
 
@@ -36,10 +35,10 @@ class Images:
         self.hubUserPassWordEntry.place (rely=0.475, relx=0.76)
         # craete Image tree View
 
-        self.imagTreViw = ttk.Treeview (self.imagTreeFrame)  # This is the Treeview Widget
-        column_list_account = ["Image ID"]  # These are our headings
-        self.imagTreViw ['columns'] = column_list_account  # We assign the column list to the widgets columns
-        self.imagTreViw ["show"] = "headings"  # this hides the default column..
+        self.imagTreViw = ttk.Treeview(self.imagTreeFrame)  # This is the Treeview Widget
+        column_list_account = ["REPOSITORY", "TAG", "Image ID","CREATED", "SIZE"]  # These are our headings
+        self.imagTreViw['columns'] = column_list_account  # We assign the column list to the widgets columns
+        self.imagTreViw["show"] = "headings"  # this hides the default column..
 
         for column in column_list_account:  # foreach column
             self.imagTreViw.heading (column, text=column)  # let the column heading = column name
@@ -61,39 +60,67 @@ class Images:
         selectedimage = str (self.imagTreViw.item (self.imagTreViw.focus ()))
         return selectedimage [78:90]
 
+    def GetListDate(self):
+
+        def InfoInsert(cmd):
+            row = 0
+            os.system (cmd)
+            file = open ("imagelist.dat")
+            for i in file:
+                imagelist[row].append(i)
+                row += 1
+
+        self.row = 0
+
+
+        imagelist = []
+        os.system ("docker ps -a --format '{{.Repository}}' > imagelist.dat ")
+        file = open ("imagelist.dat")
+        for i in file:
+            imagelist.insert(self.row, [i])
+            self.row += 1
+
+        cmd = "docker ps -a --format '{{.Tag}}' > dockerList.dat"
+        InfoInsert (cmd)
+        cmd = "docker ps -a --format '{{.ID}}' > dockerList.dat"
+        InfoInsert (cmd)
+        cmd = "docker ps -a --format '{{.CreatedAt}}' > dockerList.dat"
+        InfoInsert (cmd)
+        cmd = "docker ps -a --format '{{.Size}}' > dockerList.dat"
+        InfoInsert (cmd)
+
+
     def GetImageList(self):
         for i in self.imagTreViw.get_children ():  # clear the old list form screen
             self.imagTreViw.delete (i)
         os.system('docker images > imagelist.dat')
         try:
-            df = pd.read_csv("imagelist.dat")
-
+            imagelist = self.GetListDate()
         except ValueError:
             tk.messagebox.showerror("Information", "The File you have entered is invalid")
             return None
 
-        df_rows = df.to_numpy ().tolist ()  # turns the dataframe into a list of lists
-        for row in df_rows:
-            self.imagTreViw.insert ("", "end", values=row)  # inserts each list into the treeview
 
-        self.imagInfoLbl.configure (text="Please Choose a Container and right Click to select Action")
+        for row in imagelist:
+            self.imagTreViw.insert("", "end", values=row)  # inserts each list into the treeview
+
+        self.imagInfoLbl.configure(text="Please Choose a Container and right Click to select Action")
 
     def RunImage(self):
         imageID = self.GetImageID ()
         os.system('gnome-terminal -- bash -c "docker run -it  {0} /bin/bash"'.format(imageID))
 
     def DownloadImage(self):
-
-        answer = simpledialog.askstring ("Download Image", "Please Enter the image name ")
+        #Todo 2 answer quiston : by name or by link
+        answer = simpledialog.askstring("Download Image", "Please Enter the image name ")
         if answer is not None:
             try:
-                os.system ("docker pull {0}".format (answer))
+                os.system("docker pull {0}".format(answer))
             except:
-                pass
-
+                messagebox.showerror("Error", "Can't download Image")
 
         else:
-            print ("You don't have a first name?")
+            print("You didn't insert image name!")
 
     def CreateImage(self):
         pass
