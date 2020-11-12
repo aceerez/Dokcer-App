@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk, filedialog, messagebox, simpledialog
-import pandas as pd
 import os
 
 
@@ -66,21 +65,23 @@ class Container:
             return "Exited"
 
     def GetListDate(self):
+
         def InfoInsert(cmd):
             row = 0
             os.system(cmd)
             file = open ("dockerList.dat")
             for i in file:
-                list [row].append (i)
+                containerlist [row].append (i)
                 row += 1
+
         self.row = 0
 
-        conlist = [[]]
-        list = []
+
+        containerlist = []
         os.system ("docker ps -a --format '{{.ID}}' > dockerList.dat ")
         file = open ("dockerList.dat")
         for i in file:
-            list.insert (self.row, [i])
+            containerlist.insert (self.row, [i])
             self.row += 1
 
         cmd = "docker ps -a --format '{{.Image}}' > dockerList.dat"
@@ -95,35 +96,29 @@ class Container:
         InfoInsert (cmd)
         cmd = "docker ps -a --format '{{.Names}}' > dockerList.dat"
         InfoInsert (cmd)
-        
+
 
 
 
         return list
 
     def GetContainerList(self):
-        for i in self.contTreViw.get_children ():  # clear the old list form screen
-            self.contTreViw.delete (i)
-        # os.system('docker ps -a > dockerList.dat')
+        for i in self.contTreViw.get_children():  # clear the old list form screen
+            self.contTreViw.delete(i)
         try:
-            # df = pd.read_csv("contlainer_list")
-
-            list = self.GetListDate ()
-
-        #   print(file.read())
-
+            containerlist = self.GetListDate()
         except ValueError:
-            tk.messagebox.showerror ("Information", "The File you have entered is invalid")
+            tk.messagebox.showerror("Information", "The File you have entered is invalid")
             return None
 
-        # df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
-        for row in list:
-            self.contTreViw.insert ("", "end", values=row)  # inserts each list into the treeview
-        self.contInfoLbl.configure (text="Please Choose a Container and right Click to select Action")
+
+        for row in containerlist:
+            self.contTreViw.insert("", "end", values=row)  # inserts each list into the treeview
+        self.contInfoLbl.configure(text="Please Choose a Container and right Click to select Action")
 
     def DeleteContainer(self):
-        contID = self.GetContID ()
-        if messagebox.askokcancel ("Delete container", "Are you sure you want to Delete container?"):
+        contID = self.GetContID()
+        if messagebox.askokcancel("Delete container", "Are you sure you want to Delete container?"):
             try:
                 os.system ('docker rm -f {0}'.format (contID))
                 self.contTreViw.delete (self.contTreViw.selection ())
@@ -180,4 +175,3 @@ class Container:
         except Exception:
             self.CreatContainerPopMenu ()
         self.contPopMenu.tk_popup (e.x_root, e.y_root)
- 
