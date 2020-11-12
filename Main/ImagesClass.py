@@ -74,19 +74,19 @@ class Images:
 
 
         imagelist = []
-        os.system ("docker ps -a --format '{{.Repository}}' > imagelist.dat ")
+        os.system ("docker images --format '{{.Repository}}' > imagelist.dat ")
         file = open ("imagelist.dat")
         for i in file:
             imagelist.insert(self.row, [i])
             self.row += 1
 
-        cmd = "docker ps -a --format '{{.Tag}}' > dockerList.dat"
+        cmd = "docker images --format '{{.Tag}}' > imagelist.dat"
         InfoInsert (cmd)
-        cmd = "docker ps -a --format '{{.ID}}' > dockerList.dat"
+        cmd = "docker images --format '{{.ID}}' > imagelist.dat"
         InfoInsert (cmd)
-        cmd = "docker ps -a --format '{{.CreatedAt}}' > dockerList.dat"
+        cmd = "docker images --format '{{.CreatedAt}}' > imagelist.dat"
         InfoInsert (cmd)
-        cmd = "docker ps -a --format '{{.Size}}' > dockerList.dat"
+        cmd = "docker images --format '{{.Size}}' > imagelist.dat"
         InfoInsert (cmd)
         return imagelist
 
