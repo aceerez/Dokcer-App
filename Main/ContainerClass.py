@@ -25,7 +25,8 @@ class Container:
         # create Container tree View
 
         self.contTreViw = ttk.Treeview (self.contTreeFrame)  # This is the Treeview Widget
-        self.column_list_account = ["CONTAINER ID"]  # These are our headings
+        self.column_list_account = ["CONTAINER ID", "IMAGE NAME", "COMMAND", "TIME CREATED", "CONTAINER STATUS",
+                                    "PORTS", "CONTAINER NAME            "]  # These are our headings
         self.contTreViw ['columns'] = self.column_list_account  # We assign the column list to the widgets columns
         self.contTreViw ["show"] = "headings"  # this hides the default column..
 
@@ -48,96 +49,135 @@ class Container:
     ####Container menu Function
 
     def GetContID(self):
-        selectedCont = str(self.contTreViw.item(self.contTreViw.focus()))
-        return selectedCont[38:50]
+        selectedCont = str (self.contTreViw.item (self.contTreViw.focus ()))
+        print (selectedCont)
+        return selectedCont [38:50]
 
     def ContainerStatus(self):
-        continaerStatus = str(self.contTreViw.item(self.contTreViw.focus()))
-        pausedPos = continaerStatus.find("Paused")
-        upPos = continaerStatus.find("Up")
-        exitedPos = continaerStatus.find("Exited")
-        if continaerStatus[pausedPos:(pausedPos+6)] == "Paused":
+        continaerStatus = str (self.contTreViw.item (self.contTreViw.focus ()))
+        pausedPos = continaerStatus.find ("Paused")
+        upPos = continaerStatus.find ("Up")
+        exitedPos = continaerStatus.find ("Exited")
+        if continaerStatus [pausedPos:(pausedPos + 6)] == "Paused":
             return "Paused"
-        elif continaerStatus[upPos:(upPos+2)] == "Up":
-                return "Up"
-        elif continaerStatus[exitedPos:(exitedPos+6)] == "Exited":
+        elif continaerStatus [upPos:(upPos + 2)] == "Up":
+            return "Up"
+        elif continaerStatus [exitedPos:(exitedPos + 6)] == "Exited":
             return "Exited"
 
+    def GetListDate(self):
+        def InfoInsert(cmd):
+            row = 0
+            os.system(cmd)
+            file = open ("dockerList.dat")
+            for i in file:
+                list [row].append (i)
+                row += 1
+        self.row = 0
+
+        conlist = [[]]
+        list = []
+        os.system ("docker ps -a --format '{{.ID}}' > dockerList.dat ")
+        file = open ("dockerList.dat")
+        for i in file:
+            list.insert (self.row, [i])
+            self.row += 1
+
+        cmd = "docker ps -a --format '{{.Image}}' > dockerList.dat"
+        InfoInsert(cmd)
+        cmd = "docker ps -a --format '{{.Command}}' > dockerList.dat"
+        InfoInsert (cmd)
+        cmd = "docker ps -a --format '{{.RunningFor}}' > dockerList.dat"
+        InfoInsert (cmd)
+        cmd = "docker ps -a --format '{{.Status}}' > dockerList.dat"
+        InfoInsert (cmd)
+        cmd = "docker ps -a --format '{{.Ports}}' > dockerList.dat"
+        InfoInsert (cmd)
+        cmd = "docker ps -a --format '{{.Names}}' > dockerList.dat"
+        InfoInsert (cmd)
+        
+
+
+
+        return list
+
     def GetContainerList(self):
-        for i in self.contTreViw.get_children():  # clear the old list form screen
-            self.contTreViw.delete(i)
-        os.system('docker ps -a > dockerList.dat')
+        for i in self.contTreViw.get_children ():  # clear the old list form screen
+            self.contTreViw.delete (i)
+        # os.system('docker ps -a > dockerList.dat')
         try:
-            df = pd.read_csv("dockerList.dat")
+            # df = pd.read_csv("contlainer_list")
+
+            list = self.GetListDate ()
+
+        #   print(file.read())
 
         except ValueError:
-            tk.messagebox.showerror("Information", "The File you have entered is invalid")
+            tk.messagebox.showerror ("Information", "The File you have entered is invalid")
             return None
 
-        df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
-        for row in df_rows:
-            self.contTreViw.insert("", "end", values=row)  # inserts each list into the treeview
-        self.contInfoLbl.configure(text="Please Choose a Container and right Click to select Action")
+        # df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+        for row in list:
+            self.contTreViw.insert ("", "end", values=row)  # inserts each list into the treeview
+        self.contInfoLbl.configure (text="Please Choose a Container and right Click to select Action")
 
     def DeleteContainer(self):
-        contID = self.GetContID()
-        if messagebox.askokcancel("Delete container", "Are you sure you want to Delete container?"):
+        contID = self.GetContID ()
+        if messagebox.askokcancel ("Delete container", "Are you sure you want to Delete container?"):
             try:
-                os.system('docker rm -f {0}'.format(contID))
-                self.contTreViw.delete(self.contTreViw.selection())
-                self.GetContainerList()
+                os.system ('docker rm -f {0}'.format (contID))
+                self.contTreViw.delete (self.contTreViw.selection ())
+                self.GetContainerList ()
             except:
-                messagebox.showerror("error", "Cannot Delete Container")
+                messagebox.showerror ("error", "Cannot Delete Container")
 
     def StopStartContainer(self):
-        contID = self.GetContID()
-        if self.ContainerStatus() == "Up":
-            os.system('docker stop {0} '.format(contID))
-        elif self.ContainerStatus() == "Exited":
-            os.system('docker start {0} '.format(contID))
-        self.GetContainerList()
+        contID = self.GetContID ()
+        if self.ContainerStatus () == "Up":
+            os.system ('docker stop {0} '.format (contID))
+        elif self.ContainerStatus () == "Exited":
+            os.system ('docker start {0} '.format (contID))
+        self.GetContainerList ()
 
     def PauseUnpausecontainer(self):
-        contID = self.GetContID()
-        if self.ContainerStatus() == "Paused":
-            os.system('docker unpause {0} '.format(contID))
-        elif self.ContainerStatus() == "Up":
-            os.system('docker pause {0} '.format(contID))
-        self.GetContainerList()
+        contID = self.GetContID ()
+        if self.ContainerStatus () == "Paused":
+            os.system ('docker unpause {0} '.format (contID))
+        elif self.ContainerStatus () == "Up":
+            os.system ('docker pause {0} '.format (contID))
+        self.GetContainerList ()
 
     def RunContainer(self):
-        contID = self.GetContID()
-        messagebox.showinfo("Running Container","To EXIT the Container and returning to the app type 'Exit' in the terminal ")
-        os.system('gnome-terminal -- bash -c "docker exec -it  {0} bash; exec bash"'.format(contID))
-
+        contID = self.GetContID ()
+        messagebox.showinfo ("Running Container",
+                             "To EXIT the Container and returning to the app type 'Exit' in the terminal ")
+        os.system ('gnome-terminal -- bash -c "docker exec -it  {0} bash; exec bash"'.format (contID))
 
     ###Container Right click menu ###
     def CreatContainerPopMenu(self):
-        self.DeleteMenu()
-        self.containerStatus= self.ContainerStatus()
-        if self.GetContID() != ", 'open': 0,":
+        self.DeleteMenu ()
+        self.containerStatus = self.ContainerStatus ()
+        if self.GetContID () != ", 'open': 0,":
             if self.containerStatus == "Up":
-                self.contPopMenu.add_command(label="Stop Container", command=self.StopStartContainer)
-                self.contPopMenu.add_command(label="Pause Container", command=self.PauseUnpausecontainer)
-                self.contPopMenu.add_command(label="Run Container in terminal ", command=self.RunContainer)
+                self.contPopMenu.add_command (label="Stop Container", command=self.StopStartContainer)
+                self.contPopMenu.add_command (label="Pause Container", command=self.PauseUnpausecontainer)
+                self.contPopMenu.add_command (label="Run Container in terminal ", command=self.RunContainer)
             elif self.containerStatus == "Paused":
-                self.contPopMenu.add_command(label="Unpause Container", command=self.PauseUnpausecontainer)
+                self.contPopMenu.add_command (label="Unpause Container", command=self.PauseUnpausecontainer)
             elif self.containerStatus == "Exited":
-                self.contPopMenu.add_command(label="start Container", command=self.StopStartContainer)
+                self.contPopMenu.add_command (label="start Container", command=self.StopStartContainer)
 
-            self.contPopMenu.add_command(label="Delete Container", command=self.DeleteContainer)
+            self.contPopMenu.add_command (label="Delete Container", command=self.DeleteContainer)
 
     def DeleteMenu(self):
-        self.contPopMenu.delete(0, 20)
-
+        self.contPopMenu.delete (0, 20)
 
     def ContainerMenuPop(self, e):
         try:
-            self.contPopMenu.place_forget()
-            self.CreatContainerPopMenu()
+            self.contPopMenu.place_forget ()
+            self.CreatContainerPopMenu ()
 
         except Exception:
-            self.CreatContainerPopMenu()
-        self.contPopMenu.tk_popup(e.x_root, e.y_root)
-
+            self.CreatContainerPopMenu ()
+        self.contPopMenu.tk_popup (e.x_root, e.y_root)
  
