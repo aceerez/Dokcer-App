@@ -12,6 +12,7 @@ class Container:
         self.contTreeFrame.place (height=250, width=1000)
 
         # This is the frame for the info for container and its action
+        '''
         self.contInfoFrame = tk.LabelFrame (master, text="Container INFO")
         self.contInfoFrame.place (height=75, width=400, rely=.32, relx=0)
 
@@ -20,7 +21,7 @@ class Container:
         self.contloadListBtn = tk.Button (self.contInfoFrame, text="Load Container List",
                                           command=lambda: self.GetContainerList ())
         self.contloadListBtn.place (rely=0.5, relx=0)
-
+'''
         # create Container tree View
 
         self.contTreViw = ttk.Treeview (self.contTreeFrame)  # This is the Treeview Widget
@@ -175,3 +176,4 @@ class Container:
         except Exception:
             self.CreatContainerPopMenu ()
         self.contPopMenu.tk_popup (e.x_root, e.y_root)
+ 

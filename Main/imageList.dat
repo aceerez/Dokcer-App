@@ -1,5 +1,2 @@
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-webserver           1.0.1               00512387c248        24 hours ago        219MB
-ubuntu              latest              d70eaf7277ea        2 weeks ago         72.9MB
-debian              latest              1510e8501783        4 weeks ago         114MB
-centos              latest              0d120b6ccaa8        3 months ago        215MB
+'fedora\n', 'latest\n', 'b3048463dcef\n', '2020-11-12 02:25:31 +0200 IST\n', '175MB\n'], 'open': 0, 'tags': '
+

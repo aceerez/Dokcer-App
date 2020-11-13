@@ -1,6 +1,7 @@
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
-4bd015248437        00512387c248        "/bin/bash"         2 hours ago         Exited (129) 2 hours ago                        angry_maxwell
-ca6f2db5bc38        0d120b6ccaa8        "/bin/bash"         19 hours ago        Exited (0) 19 hours ago                         wizardly_liskov
-fbf8bd249ab9        ubuntu              "bash"              20 hours ago        Exited (129) 19 hours ago                       hungry_satoshi
-9833cf91e29a        ubuntu              "/bin/bash"         7 days ago          Up 22 hours                                     lucid_franklin
-1c404f92861c        centos              "/bin/bash"         8 days ago          Exited (0) 20 hours ago                         Superman
+great_chatterjee
+competent_davinci
+angry_maxwell
+wizardly_liskov
+hungry_satoshi
+lucid_franklin
+Superman

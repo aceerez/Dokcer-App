@@ -1,6 +1,6 @@
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-fedora              latest              b3048463dcef        14 hours ago        175MB
-webserver           1.0.1               00512387c248        43 hours ago        219MB
-ubuntu              latest              d70eaf7277ea        2 weeks ago         72.9MB
-mysql               latest              db2b37ec6181        2 weeks ago         545MB
-centos              latest              0d120b6ccaa8        3 months ago        215MB
+175MB
+219MB
+219MB
+72.9MB
+545MB
+215MB
