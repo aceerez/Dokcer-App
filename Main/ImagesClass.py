@@ -3,14 +3,16 @@ from tkinter import *
 from tkinter import ttk, filedialog, messagebox, simpledialog
 import os
 import ContainerClass
+import time
 
 
 class Images:
-    def __init__(self, master):
+    def __init__(self, master, cont: ContainerClass):
 
         # This is the frame for the Images Treeview
-        self.imagTreeFrame = tk.LabelFrame (master, text="Images list", labelanchor="n")
-        self.imagTreeFrame.place (height=250, width=600, rely=0.6, relx=0.0)
+        self.imagTreeFrame = tk.LabelFrame(master, text="Images list", labelanchor="n")
+        self.imagTreeFrame.place(height=250, width=600, rely=0.6, relx=0.0)
+        self.cont = cont
 
         # This is the frame for the info for Images and its action
         '''
@@ -24,105 +26,105 @@ class Images:
         self.imagLodlistBtn.place (rely=0.5, relx=0)
         '''
         ##doker hub credentials
-        self.hubFrame = tk.LabelFrame (master, text="Enter your Docker Hub credentials ")
-        self.hubFrame.place (height=200, width=300, rely=0.34, relx=0.02)
+        self.hubFrame = tk.LabelFrame(master, text="Enter your Docker Hub credentials ")
+        self.hubFrame.place(height=200, width=300, rely=0.34, relx=0.02)
 
-        self.hubUserNamelbl = tk.Label (self.hubFrame, text="User Name")
-        self.hubUserNamelbl.place (rely=0.2, relx=0.)
-        self.hubPasswordlbl = tk.Label (self.hubFrame, text="PassWord")
-        self.hubPasswordlbl.place (rely=0.5, relx=0.1)
-        self.hubUserNameEntry = tk.Entry ()
-        self.hubUserNameEntry.place (rely=0.425, relx=0.76)
-        self.hubUserPassWordEntry = tk.Entry ()
-        self.hubUserPassWordEntry.place (rely=0.475, relx=0.76)
+        self.hubUserNamelbl = tk.Label(self.hubFrame, text="User Name")
+        self.hubUserNamelbl.place(rely=0.2, relx=0.)
+        self.hubPasswordlbl = tk.Label(self.hubFrame, text="PassWord")
+        self.hubPasswordlbl.place(rely=0.5, relx=0.1)
+        self.hubUserNameEntry = tk.Entry()
+        self.hubUserNameEntry.place(rely=0.425, relx=0.76)
+        self.hubUserPassWordEntry = tk.Entry()
+        self.hubUserPassWordEntry.place(rely=0.475, relx=0.76)
         # craete Image tree View
 
-        self.imagTreViw = ttk.Treeview (self.imagTreeFrame)  # This is the Treeview Widget
+        self.imagTreViw = ttk.Treeview(self.imagTreeFrame, selectmode="browse")  # This is the Treeview Widget
         column_list_account = ["REPOSITORY", "TAG", "Image ID", "CREATED", "SIZE"]  # These are our headings
-        self.imagTreViw ['columns'] = column_list_account  # We assign the column list to the widgets columns
-        self.imagTreViw ["show"] = "headings"  # this hides the default column..
+        self.imagTreViw['columns'] = column_list_account  # We assign the column list to the widgets columns
+        self.imagTreViw["show"] = "headings"  # this hides the default column..
 
         for column in column_list_account:  # foreach column
-            self.imagTreViw.heading (column, text=column)  # let the column heading = column name
-            self.imagTreViw.column (column, width=50)  # set the columns size to 50px
+            self.imagTreViw.heading(column, text=column)  # let the column heading = column name
+            self.imagTreViw.column(column, width=50)  # set the columns size to 50px
 
-        self.imagTreViw.place (relheight=1,relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
+        self.imagTreViw.place(relheight=1,
+                              relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
         self.imagtreescroll = tk.Scrollbar(self.imagTreeFrame)  # create a scrollbar
         self.imagtreescroll.configure(command=self.imagTreViw.yview)  # make it vertical
         self.imagTreViw.configure(yscrollcommand=self.imagtreescroll.set)  # assign the scrollbar to the Treeview Widget
         self.imagtreescroll.pack(side="right", fill="y")  # make the scrollbar fill the yaxis of the Treeview widget
 
-        self.imagPopMenu = Menu (master, tearoff=False)
-        self.imagTreViw.bind ("<Button-3>", self.ContainerMenuPop)
+        self.imagPopMenu = Menu(master, tearoff=False)
+        self.imagTreViw.bind("<Button-3>", self.ContainerMenuPop)
 
     #####  IMAGES menu Function
     def GetImageName(self):
         selectedimage = str(self.imagTreViw.item(self.imagTreViw.focus()))
         a = selectedimage.find("['")
-        b = selectedimage.find("',",a)
-        imagName = selectedimage[selectedimage.find("['")+2:selectedimage.find("',", a)-2]
-        print("aa",imagName)
+        b = selectedimage.find("',", a)
+        imagName = selectedimage[selectedimage.find("['") + 2:selectedimage.find("',", a) - 2]
         return imagName
 
     def GetListDate(self):
 
         def InfoInsert(cmd):
             row = 0
-            os.system (cmd)
-            file = open ("imagelist.dat")
+            os.system(cmd)
+            file = open("imagelist.dat")
             for i in file:
-                imagelist [row].append (i)
+                imagelist[row].append(i)
                 row += 1
 
         self.row = 0
 
         imagelist = []
-        os.system ("docker images --format '{{.Repository}}' > imagelist.dat ")
-        file = open ("imagelist.dat")
+        os.system("docker images --format '{{.Repository}}' > imagelist.dat ")
+        file = open("imagelist.dat")
         for i in file:
-            imagelist.insert (self.row, [i])
+            imagelist.insert(self.row, [i])
             self.row += 1
 
         cmd = "docker images --format '{{.Tag}}' > imagelist.dat"
-        InfoInsert (cmd)
+        InfoInsert(cmd)
         cmd = "docker images --format '{{.ID}}' > imagelist.dat"
-        InfoInsert (cmd)
+        InfoInsert(cmd)
         cmd = "docker images --format '{{.CreatedAt}}' > imagelist.dat"
-        InfoInsert (cmd)
+        InfoInsert(cmd)
         cmd = "docker images --format '{{.Size}}' > imagelist.dat"
-        InfoInsert (cmd)
+        InfoInsert(cmd)
         return imagelist
 
     def GetImageList(self):
-        for i in self.imagTreViw.get_children ():  # clear the old list form screen
-            self.imagTreViw.delete (i)
-        os.system ('docker images > imagelist.dat')
+        for i in self.imagTreViw.get_children():  # clear the old list form screen
+            self.imagTreViw.delete(i)
+        os.system('docker images > imagelist.dat')
         try:
-            imagelist = self.GetListDate ()
+            imagelist = self.GetListDate()
         except ValueError:
-            tk.messagebox.showerror ("Information", "The File you have entered is invalid")
+            tk.messagebox.showerror("Information", "The File you have entered is invalid")
             return None
 
         for row in imagelist:
-            self.imagTreViw.insert ("", "end", values=row)  # inserts each list into the treeview
-
-
+            self.imagTreViw.insert("", "end", values=row)  # inserts each list into the treeview
 
     def RunImage(self):
         imageName = self.GetImageName()
-        os.system('gnome-terminal -- bash -c "docker run -it  {0} /bin/bash"'.format(imageName))
+        os.system('gnome-terminal -- bash -c "docker run  {0} /bin/bash"'.format(imageName))
+        time.sleep(2)
+        ContainerClass.Container.GetContainerList(self.cont)
 
     def DownloadImage(self):
         # Todo 2 answer quiston : by name or by link
-        answer = simpledialog.askstring ("Download Image", "Please Enter the image name ")
+        answer = simpledialog.askstring("Download Image", "Please Enter the image name ")
         if answer is not None:
             try:
-                os.system ("docker pull {0}".format (answer))
+                os.system("docker pull {0}".format(answer))
             except:
-                messagebox.showerror ("Error", "Can't download Image")
+                messagebox.showerror("Error", "Can't download Image")
 
         else:
-            print ("You didn't insert image name!")
+            print("You didn't insert image name!")
 
     def CreateImage(self):
         pass
@@ -131,34 +133,35 @@ class Images:
         pass
 
     def DeleteImage(self):
-        imageID = self.GetImageName ()
-        if messagebox.askokcancel ("Delete Image", "Are you sure you want to Delete Image?"):
+        selectedimage = (self.imagTreViw.item(self.imagTreViw.focus()))
+        imageID = selectedimage.get('values')[2]
+
+        if messagebox.askokcancel("Delete Image", "Are you sure you want to Delete Image?"):
             try:
-                os.system ('docker image rm {0}'.format (imageID))
-                self.imagTreViw.delete (self.imagTreViw.selection ())
-                self.GetImageList ()
+                os.system('docker image rm -f {0}'.format(imageID))
+                self.imagTreViw.delete(self.imagTreViw.selection())
+                self.GetImageList()
             except:
-                messagebox.showerror ("error", "Cannot Delete Image")
+                messagebox.showerror("error", "Cannot Delete Image")
 
     ###Image Right click menu ###
 
     def CreatImagePopMenu(self):
-        self.DeleteImageMenu ()
-        if self.GetImageName () != "":
-            self.imagPopMenu.add_command (label="create image(New Docker)", command=self.CreateImage)
-            self.imagPopMenu.add_command (label="download image", command=self.DownloadImage)
-            self.imagPopMenu.add_command (label="run image", command=self.RunImage)
-            self.imagPopMenu.add_command (label="Upload Image", command=self.UploadImage)
-            self.imagPopMenu.add_command (label="delete image", command=self.DeleteImage)
+        self.DeleteImageMenu()
+        if self.GetImageName() != "":
+            self.imagPopMenu.add_command(label="create image(New Docker)", command=self.CreateImage)
+            self.imagPopMenu.add_command(label="download image", command=self.DownloadImage)
+            self.imagPopMenu.add_command(label="run image", command=self.RunImage)
+            self.imagPopMenu.add_command(label="Upload Image", command=self.UploadImage)
+            self.imagPopMenu.add_command(label="delete image", command=self.DeleteImage)
 
     def DeleteImageMenu(self):
-        self.imagPopMenu.delete (0, 20)
+        self.imagPopMenu.delete(0, 20)
 
     def ContainerMenuPop(self, e):
         try:
-            self.imagPopMenu.place_forget ()
-            self.CreatImagePopMenu ()
+            self.imagPopMenu.place_forget()
+            self.CreatImagePopMenu()
         except Exception:
-            self.CreatImagePopMenu ()
-        self.imagPopMenu.tk_popup (e.x_root, e.y_root)
- 
+            self.CreatImagePopMenu()
+        self.imagPopMenu.tk_popup(e.x_root, e.y_root)
