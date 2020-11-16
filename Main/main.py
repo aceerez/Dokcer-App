@@ -24,6 +24,12 @@ def InsertData():
     containerMenu.GetContainerList()
     imageMenu.GetImageList()
 
+def DeleteAllContainers():
+    containerMenu.DeleteAllContainer()
+
+def DeleteAllImages():
+    imageMenu.DeleteAllImage()
+
 
 file_menu = Menu(bar_menu)
 bar_menu.add_cascade(label="File", menu=file_menu)
@@ -34,7 +40,7 @@ file_menu.add_command(label="Exit", command=root.quit)
 
 edit_menu = Menu(bar_menu)
 bar_menu.add_cascade(label="Edit", menu=edit_menu)
-edit_menu.add_command(label="Delete All Containers")
-edit_menu.add_command(label="Delete All Images")
+edit_menu.add_command(label="Delete All Containers",command=DeleteAllContainers)
+edit_menu.add_command(label="Delete All Images",command=DeleteAllImages)
 
 root.mainloop()  # The mainloop for our tkinter Gui

@@ -142,7 +142,13 @@ class Container:
         messagebox.showinfo("Running Container",
                             "To EXIT the Container and returning to the app type 'Exit' in the terminal ")
         os.system('gnome-terminal -- bash -c "docker exec -it  {0} bash; exec bash"'.format(contID))
-
+    def DeleteAllContainer(self):
+        if messagebox.askokcancel("Delete All Containers", "Are you sure you want to Delete All Containers?"):
+            try:
+                os.system('docker rm -vf $(docker ps -a -q)')
+                self.GetContainerList()
+            except:
+                messagebox.showerror("Error", "Cannot Delete Containers")
     ###Container Right click menu ###
     def CreatContainerPopMenu(self):
         self.DeleteMenu()
