@@ -67,21 +67,21 @@ class Container:
     def GetListDate(self):
 
         def InfoInsert(cmd):
-            self.row = 0
+            listrow = 0
             os.system(cmd)
             file = open("dockerList.dat")
             for i in file:
-                containerlist[self.row].append(i)
-                self.row += 1
+                containerlist[listrow].append(i)
+                listrow += 1
 
-        self.row = 0
+        row = 0
 
         containerlist = []
         os.system("docker ps -a --format '{{.ID}}' > dockerList.dat ")
         file = open("dockerList.dat")
         for i in file:
-            containerlist.insert(self.row, [i])
-            self.row += 1
+            containerlist.insert(row, [i])
+            row += 1
 
         cmd = "docker ps -a --format '{{.Image}}' > dockerList.dat"
         InfoInsert(cmd)
@@ -105,7 +105,7 @@ class Container:
         try:
             containerlist = self.GetListDate()
         except ValueError:
-            tk.messagebox.showerror("Information", "The File you have entered is invalid")
+            tk.messagebox.showerror("Error", "Something went wrong!")
             return None
 
         for row in containerlist:
@@ -142,6 +142,7 @@ class Container:
         messagebox.showinfo("Running Container",
                             "To EXIT the Container and returning to the app type 'Exit' in the terminal ")
         os.system('gnome-terminal -- bash -c "docker exec -it  {0} bash; exec bash"'.format(contID))
+
     def DeleteAllContainer(self):
         if messagebox.askokcancel("Delete All Containers", "Are you sure you want to Delete All Containers?"):
             try:

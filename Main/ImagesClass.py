@@ -27,7 +27,7 @@ class Images:
                                          command=lambda: self.GetImageList ())
         self.imagLodlistBtn.place (rely=0.5, relx=0)
         '''
-        ##Option Box
+        # Option Box
         self.optionFrame = tk.LabelFrame(master, text="Image Option", labelanchor='n')
         self.optionFrame.place(height=250, width=160, rely=0.60, relx=0.61)
         newImageBtn = tk.Button(self.optionFrame, text="Create New Image", command=self.CreateImage)
@@ -68,7 +68,7 @@ class Images:
         self.imagPopMenu = Menu(master, tearoff=False)
         self.imagTreViw.bind("<Button-3>", self.ContainerMenuPop)
 
-    #####  IMAGES menu Function
+    #  IMAGES menu Function
     def GetImageName(self):
         selectedimage = str(self.imagTreViw.item(self.imagTreViw.focus()))
         find_start = selectedimage.find("['")
@@ -81,22 +81,22 @@ class Images:
 
     def GetListDate(self):
 
-        def InfoInsert(cmd):
-            row = 0
-            os.system(cmd)
-            file = open("imagelist.dat")
-            for i in file:
-                imagelist[row].append(i)
-                row += 1
+        def InfoInsert(bash_command):
+            listrow = 0
+            os.system(bash_command)
+            filedata = open("imagelist.dat")
+            for data in filedata:
+                imagelist[listrow].append(data)
+                listrow += 1
 
-        self.row = 0
+        row = 0
 
         imagelist = []
         os.system("docker images --format '{{.Repository}}' > imagelist.dat ")
         file = open("imagelist.dat")
         for i in file:
-            imagelist.insert(self.row, [i])
-            self.row += 1
+            imagelist.insert(row, [i])
+            row += 1
 
         cmd = "docker images --format '{{.Tag}}' > imagelist.dat"
         InfoInsert(cmd)
@@ -126,9 +126,11 @@ class Images:
         selectedimage = (self.imagTreViw.item(self.imagTreViw.focus()))
         imageTag = selectedimage.get('values')[1]
 
-        if messagebox.askyesno("Use Ports?","Do you want to Run this Image with PORTS?\n (Select 'No' to Run with Bash)"):
-            ports = simpledialog.askstring("","Enter Image Port , use format XX:XX")
+        if messagebox.askyesno("Use Ports?",
+                               "Do you want to Run this Image with PORTS?\n (Select 'No' to Run with Bash)"):
+            ports = simpledialog.askstring("", "Enter Image Port , use format XX:XX")
             os.system('gnome-terminal -- bash -c "docker run -d -p {0} {1}:{2} "'.format(ports, imageName, imageTag))
+            time.sleep(2)
         else:
             os.system('gnome-terminal -- bash -c "docker run -it {0}:{1} "'.format(imageName, imageTag))
             time.sleep(2)
@@ -139,56 +141,72 @@ class Images:
             webbrowser.open_new("https://hub.docker.com/search?type=image")
 
         def DownloadCmd(e):
-            cheackLen = len(self.imagTreViw.get_children())
+            cheacklen = len(self.imagTreViw.get_children())
             os.system("docker pull {0}".format(self.imageNameEntry.get()))
-            if self.CheakListChange(cheackLen):
+            if self.CheakListChange(cheacklen):
                 messagebox.showinfo("Successes", "Image Downloaded Successfully ")
                 downloadTop.destroy()
             else:
                 messagebox.showerror("ERROR", "ERROR! Can not download image.\nCheck image name again ")
                 downloadTop.destroy()
 
+        def CancelDownload():
+            downloadTop.destroy()
+
         self.GetImageList()
         downloadTop = Toplevel()
-        downloadTop.geometry("{0}x{1}+{2}+{3}".format(400, 400, 700, 400))
+        downloadTop.geometry("{0}x{1}+{2}+{3}".format(360, 240, 700, 605))
         infolbl = tk.Label(downloadTop, text="Please Enter the image name.", font=('Arial', 15))
         infolbl.place(rely=0, relx=0.15)
         self.imageNameEntry = tk.Entry(downloadTop, font=("Arial", 15))
-        self.imageNameEntry.place(rely=0.1, relx=0.2)
+        self.imageNameEntry.place(rely=0.2, relx=0.2)
 
         searchLbl = Label(downloadTop, text="You can search Images in:\n Docker Hub ", font=("", 13))
-        searchLbl.place(rely=0.2, relx=0.2)
-        searcBtn = Button(downloadTop, text="HERE", command=OpenUrl)
-        searcBtn.place(rely=0.32, relx=0.4)
+        searchLbl.place(rely=0.4, relx=0.2)
+        searcBtn = Button(downloadTop, text="Search Docker Hub", command=OpenUrl)
+        searcBtn.place(rely=0.7, relx=0.1)
+        cancelBtn = Button(downloadTop, text="Cancel", command=CancelDownload)
+        cancelBtn.place(rely=0.7, relx=0.6)
         self.imageNameEntry.bind("<Return>", DownloadCmd)
 
     def CreateImage(self):
         path = filedialog.askopenfilename(initialdir="/home/",
-                                              title="Select Only A Docker File")
+                                          title="Select Only A Docker File")
+        if not path:
+            return
+        else:
+            try:
+                while True:
+                    imageName = simpledialog.askstring("Image Name", "Enter Image Name")
+                    if imageName == "":
+                        messagebox.showerror("Error", "Must Enter an Image name")
+                    elif imageName == None:
+                        return
+                    else:
+                        break
+                self.GetImageList()
+                cheackLen = len(self.imagTreViw.get_children())
+                try:
 
-        filename = os.path.split(path)[1]
-        imageName = simpledialog.askstring("Image Name", "Enter Image Name")
-        self.GetImageList()
-        cheackLen = len(self.imagTreViw.get_children())
-        while True:
-            if imageName != "":
-                tagName = simpledialog.askstring("Tag Name", "Enter Tag Name or leave empty")
-                if tagName == "":
-                    os.system('docker build -t="{0}" . -f {1}'.format(imageName,path))
-                else:
-                    os.system('docker build -t="{0}:{1}" . '.format(imageName, tagName))
+                    tagName = simpledialog.askstring("Tag Name", "Enter Tag Name or leave empty")
+                    if tagName == None:
+                        return
+                    elif tagName == "":
+                        os.system('docker build -t="{0}" . -f {1}'.format(imageName, path))
+                    else:
+                        os.system('docker build -t="{0}:{1}" . '.format(imageName, tagName))
 
-                if self.CheakListChange(cheackLen):
-                    ContainerClass.Container.GetContainerList(self.cont)
-                    messagebox.showinfo("Successes", "Image Created Successfully")
+                    if self.CheakListChange(cheackLen):
+                        ContainerClass.Container.GetContainerList(self.cont)
+                        messagebox.showinfo("Successes", "Image Created Successfully")
 
-                    break
-                else:
-                    messagebox.showerror("ERROR", "ERROR! Can not Creat image.\nCheck DockerFile or Name ")
-                    break
+                    else:
+                        messagebox.showerror("ERROR", "ERROR! Can not Creat image.\nCheck DockerFile or Name ")
 
-            else:
-                imageName = simpledialog.askstring("Image Name", "Enter Image Name")
+                except:
+                    return
+            except:
+                return
 
     def CheakListChange(self, cheackLen):
         self.GetImageList()
@@ -197,17 +215,43 @@ class Images:
         else:
             return False
 
+    def CheackDialog(self, title, pronmt):
+        while True:
+            cheakfile = simpledialog.askstring(title, pronmt)
+            if cheakfile == "":
+                messagebox.showerror("Error", "Must Enter Input")
+            elif cheakfile is None:
+                return None
+            else:
+                return cheakfile
+
     def UploadImage(self):
-        pass
+        selectedimage = (self.imagTreViw.item(self.imagTreViw.focus()))
+        print(selectedimage)
+        username = self.CheackDialog('Docker Hub Login', "Please Enter your docker hub User Name")
+        if username == None:
+            return
+
+        password = self.CheackDialog('Docker Hub Login', "Please Enter your docker hub Password")
+        if password == None:
+            return
+
+        imageID = selectedimage.get('values')[2]
+        imagename = self.GetImageName()
+        os.system("docker login -u {0} -p {1}".format(username, password))
+        os.system("docker tag {0} {1}/{2}".format(str(imageID).rstrip(), username, imagename))
+        os.system("docker push {0}/{1}".format(username, imagename))
+        self.GetImageList()
+        messagebox.showinfo("Sucsses","Upload Image {0} Successfully to repo {1}".format(imagename, username))
 
     def DeleteImage(self):
         cheackLen = len(self.imagTreViw.get_children())
         selectedimage = (self.imagTreViw.item(self.imagTreViw.focus()))
-        imageID = selectedimage.get('values')[2]
+        imagename = self.GetImageName()
 
         if messagebox.askokcancel("Delete Image", "Are you sure you want to Delete Image?"):
             try:
-                os.system('docker image rm -f {0}'.format(imageID))
+                os.system('docker image rm -f {0}'.format(imagename))
                 if self.CheakListChange(cheackLen):
                     messagebox.showinfo("", "Image Deleted!")
                 else:
@@ -231,8 +275,6 @@ class Images:
         self.DeleteImageMenu()
 
         if self.GetImageName() != "":
-            self.imagPopMenu.add_command(label="create image(New Docker)", command=self.CreateImage)
-            self.imagPopMenu.add_command(label="download image", command=self.DownloadImage)
             self.imagPopMenu.add_command(label="run image", command=self.RunImage)
             self.imagPopMenu.add_command(label="Upload Image", command=self.UploadImage)
             self.imagPopMenu.add_command(label="delete image", command=self.DeleteImage)

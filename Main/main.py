@@ -24,8 +24,10 @@ def InsertData():
     containerMenu.GetContainerList()
     imageMenu.GetImageList()
 
+
 def DeleteAllContainers():
     containerMenu.DeleteAllContainer()
+
 
 def DeleteAllImages():
     imageMenu.DeleteAllImage()
@@ -40,7 +42,9 @@ file_menu.add_command(label="Exit", command=root.quit)
 
 edit_menu = Menu(bar_menu)
 bar_menu.add_cascade(label="Edit", menu=edit_menu)
-edit_menu.add_command(label="Delete All Containers",command=DeleteAllContainers)
-edit_menu.add_command(label="Delete All Images",command=DeleteAllImages)
+edit_menu.add_command(label="Delete All Containers", command=DeleteAllContainers)
+edit_menu.add_command(label="Delete All Images", command=DeleteAllImages)
 
+loadbtn = Button(root, text="Load Docker \n Data", command=InsertData, font=("arial", 30))
+loadbtn.place(rely=0.4, relx=0)
 root.mainloop()  # The mainloop for our tkinter Gui
