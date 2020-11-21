@@ -142,7 +142,7 @@ class Images:
 
         def DownloadCmd(e):
             cheacklen = len(self.imagTreViw.get_children())
-            os.system("docker pull {0}".format(self.imageNameEntry.get()))
+            os.system("docker pull {0}".format(imageNameEntry.get()))
             if self.CheakListChange(cheacklen):
                 messagebox.showinfo("Successes", "Image Downloaded Successfully ")
                 downloadTop.destroy()
@@ -158,8 +158,8 @@ class Images:
         downloadTop.geometry("{0}x{1}+{2}+{3}".format(360, 240, 700, 605))
         infolbl = tk.Label(downloadTop, text="Please Enter the image name.", font=('Arial', 15))
         infolbl.place(rely=0, relx=0.15)
-        self.imageNameEntry = tk.Entry(downloadTop, font=("Arial", 15))
-        self.imageNameEntry.place(rely=0.2, relx=0.2)
+        imageNameEntry = tk.Entry(downloadTop, font=("Arial", 15))
+        imageNameEntry.place(rely=0.2, relx=0.2)
 
         searchLbl = Label(downloadTop, text="You can search Images in:\n Docker Hub ", font=("", 13))
         searchLbl.place(rely=0.4, relx=0.2)
@@ -167,10 +167,10 @@ class Images:
         searcBtn.place(rely=0.7, relx=0.1)
         cancelBtn = Button(downloadTop, text="Cancel", command=CancelDownload)
         cancelBtn.place(rely=0.7, relx=0.6)
-        self.imageNameEntry.bind("<Return>", DownloadCmd)
+        imageNameEntry.bind("<Return>", DownloadCmd)
 
     def CreateImage(self):
-        path = filedialog.askopenfilename(initialdir="/home/",
+        path = filedialog.askopenfilename(initialdir="./dockerFiles",
                                           title="Select Only A Docker File")
         if not path:
             return
@@ -180,7 +180,7 @@ class Images:
                     imageName = simpledialog.askstring("Image Name", "Enter Image Name")
                     if imageName == "":
                         messagebox.showerror("Error", "Must Enter an Image name")
-                    elif imageName == None:
+                    elif imageName is None:
                         return
                     else:
                         break
@@ -189,7 +189,7 @@ class Images:
                 try:
 
                     tagName = simpledialog.askstring("Tag Name", "Enter Tag Name or leave empty")
-                    if tagName == None:
+                    if tagName is None:
                         return
                     elif tagName == "":
                         os.system('docker build -t="{0}" . -f {1}'.format(imageName, path))
@@ -227,13 +227,12 @@ class Images:
 
     def UploadImage(self):
         selectedimage = (self.imagTreViw.item(self.imagTreViw.focus()))
-        print(selectedimage)
         username = self.CheackDialog('Docker Hub Login', "Please Enter your docker hub User Name")
-        if username == None:
+        if username is None:
             return
 
         password = self.CheackDialog('Docker Hub Login', "Please Enter your docker hub Password")
-        if password == None:
+        if password is None:
             return
 
         imageID = selectedimage.get('values')[2]
@@ -242,24 +241,32 @@ class Images:
         os.system("docker tag {0} {1}/{2}".format(str(imageID).rstrip(), username, imagename))
         os.system("docker push {0}/{1}".format(username, imagename))
         self.GetImageList()
-        messagebox.showinfo("Sucsses","Upload Image {0} Successfully to repo {1}".format(imagename, username))
+        messagebox.showinfo("Sucsses", "Upload Image {0} Successfully to repo {1}".format(imagename, username))
 
     def DeleteImage(self):
         cheackLen = len(self.imagTreViw.get_children())
         selectedimage = (self.imagTreViw.item(self.imagTreViw.focus()))
         imagename = self.GetImageName()
+        imageid = selectedimage.get('values')[2]
+        print(imageid)
 
         if messagebox.askokcancel("Delete Image", "Are you sure you want to Delete Image?"):
-            try:
-                os.system('docker image rm -f {0}'.format(imagename))
-                if self.CheakListChange(cheackLen):
-                    messagebox.showinfo("", "Image Deleted!")
+            if imagename.find("<") == 0:
+                if messagebox.askyesno("Error", "Image has no name. Delete Image by ID ? \n(Warning may delete other "
+                                                "images !!)"):
+                    os.system('docker image rm -f {0}'.format(imageid))
                 else:
-                    messagebox.showerror("", "Cannot Delete Image!\n"
-                                             "Image may be in use")
-
-            except:
-                messagebox.showerror("error", "Cannot Delete Image")
+                    return
+            else:
+                try:
+                    os.system('docker image rm -f {0}'.format(imagename))
+                except:
+                    messagebox.showerror("error", "Cannot Delete Image")
+        if self.CheakListChange(cheackLen):
+            messagebox.showinfo("", "Image Deleted!")
+        else:
+            messagebox.showerror("", "Cannot Delete Image!\n"
+                                     "Image may be in use")
 
     def DeleteAllImage(self):
         if messagebox.askokcancel("Delete All Images", "Are you sure you want to Delete all Images?"):
@@ -269,7 +276,7 @@ class Images:
             except:
                 messagebox.showerror("error", "Cannot Delete Images")
 
-    ###Image Right click menu ###
+    # Image Right click menu ###
 
     def CreatImagePopMenu(self):
         self.DeleteImageMenu()

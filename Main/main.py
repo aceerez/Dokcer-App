@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import ttk, filedialog, messagebox, simpledialog
+from tkinter import filedialog, simpledialog
 
 import os
 import ContainerClass
@@ -33,10 +33,27 @@ def DeleteAllImages():
     imageMenu.DeleteAllImage()
 
 
+def NewDockerFile():
+    answer = simpledialog.askstring("Docker File Name", "Enter Docker file name ")
+    os.system('gnome-terminal -- bash -c "nano ./dockerFiles/{0}; exec bash"'.format(answer))
+
+
+def EditDOckerFile():
+    path = filedialog.askopenfilename(initialdir="./dockerFiles",
+                                      title="Select Only A Docker File")
+    print(path)
+    if not path:
+        return
+    else:
+        os.system('gnome-terminal -- bash -c "nano {0}; exec bash"'.format(path))
+
+
 file_menu = Menu(bar_menu)
 bar_menu.add_cascade(label="File", menu=file_menu)
 file_menu.add_command(label="Load Data", command=InsertData)
-file_menu.add_command(label="New Docker File")
+file_menu.add_separator()
+file_menu.add_command(label="New Docker File", command=NewDockerFile)
+file_menu.add_command(label="Edit Docker File", command=EditDOckerFile)
 file_menu.add_separator()
 file_menu.add_command(label="Exit", command=root.quit)
 
