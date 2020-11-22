@@ -5,11 +5,6 @@
 echo Update Local Database
 sudo apt-get update
 
-echo install python3 and components
-sudo apt install python3 python3-pip -y
-sudo apt-get install python3-tk
-sudo apt-get install python-pandas -y
-
 echo Download Dependencies
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 
