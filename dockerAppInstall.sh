@@ -20,6 +20,10 @@ sudo apt-get update
 echo Install Latest Version of Docker
 sudo apt-get install docker-ce
 
+echo install python3 and components 
+sudo apt install python3 python3-pip -y
+sudo apt-get install python3-tk
+
 echo Create the docker group.
 sudo groupadd docker
 
