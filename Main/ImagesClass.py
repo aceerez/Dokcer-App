@@ -226,6 +226,9 @@ class Images:
                 return cheakfile
 
     def UploadImage(self):
+        if self.GetImageName() == "":
+            messagebox.showerror("Error", "No Image Selected")
+            return
         selectedimage = (self.imagTreViw.item(self.imagTreViw.focus()))
         username = self.CheackDialog('Docker Hub Login', "Please Enter your docker hub User Name")
         if username is None:

@@ -3,14 +3,13 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog, simpledialog
-
 import os
 import ContainerClass
 import ImagesClass
 
 # initialize the tkinter GUI
 root = tk.Tk()
-
+root.title("Dokcer App")
 root.geometry("1000x800")
 root.pack_propagate(0)
 root.resizable(0, 0)
@@ -37,8 +36,10 @@ def DeleteAllImages():
 
 def NewDockerFile():
     answer = simpledialog.askstring("Docker File Name", "Enter Docker file name ")
-    os.system('gnome-terminal -- bash -c "nano ./dockerFiles/{0}; exec bash"'.format(answer))
-
+    if answer :
+        os.system('gnome-terminal -- bash -c "nano ./dockerFiles/{0}; exec bash"'.format(answer))
+    else:
+        return
 
 def EditDOckerFile():
     path = filedialog.askopenfilename(initialdir="./dockerFiles",
