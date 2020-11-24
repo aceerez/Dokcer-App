@@ -21,22 +21,26 @@ CPU Count	Minimum: 2  Recommended 4+.
 
 INSTALL App & components
 
-Download the files from github at: https://github.com/aceerez/Dokcer-App.git
+Download the files from github at: https://github.com/aceerez/Dokcer-App.git 
 
 
-Run the App installer in Terminal using the bash command - " bash dockerAppInstall.sh " and follow the instructions.
+Run the App installer in Terminal using the bash command - " bash dockerAppInstall.sh "press 'y' when ask to.
 when finished, log out and than log in .
-NOTE: if get an error during installion "line 2 $' r' command not found" ,stop the instal using Ctrl+Z .
-this happaned 
 
+this script install docker and necessary components to run this app
 
-If you get these Errors :
+If you get these Errors during installation :
+
                           E: Could not get lock /var/lib/dpkg/lock – open (11: Resource temporarily unavailable)
+
                           E: Unable to lock the administration directory (/var/lib/dpkg/), is another process using it?
+
 That means that your APT service is occupied. 
 restart your machine or wait it out.
 NOTE: you can use this command to see APT in use.
-                                      ps aux | grep -i apt
+
+
+ps aux | grep -i apt
                                       
 
 
@@ -44,18 +48,48 @@ NOTE: you can use this command to see APT in use.
 make sure that evrything is insatll corectly.
 
 
-# Using Dokcer App 
-The window is split into 2 , container and images.
+# Using the Dokcer App 
+# Running the app:
+Terminal - in the Main follder run the app using "python3 dockerApp.py"
+
+Files manager - first make sure that you can run files (you can use this tutrial https://askubuntu.com/questions/761365/how-to-run-a-python-program-directly)
+and just run the dockerApp.py
+
+# Using the app
+
+The main window is splited into two , container and images.
 in the midelle there is a big botton that load all the docker data to the main windows, now you can start working . 
 
-The bar menu located in the top left of the main window and it has 2 menu .
-File 
-to load data from t
+The bar menu:
+
+The bar menu is located in the top left of the main window and it has two menu .
+# File 
+# load data - load docker data to the app
+# new docker file:
+creat a new dockerfile using nano. 
+fisrt name your file and when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
+the new docker file will be placed in the dockerfiles directory.
+
+# edit docker file:
+edit a docker file using nano,when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
+
+# Edit 
+# Delete all containers - this action will DELELTE ALL CONTAINERS . use it carefully.
+# Delete all Images - this action will DELELTE ALL Images . use it carefully.
+
+# The Containers window 
+After the data is loaded into the container window, select any container form the list and press the right mouse key to open the option menu.
+the option in the menu will change according to the container status. 
+you can : start,stop,pause and unpause,delelet and get in the container.
+
+# The Image window
+
+
 
 
 # Trubleshoting 
 
    Error                                                   sulotion
 
-B} Can't execut app from filemanger                          3)https://askubuntu.com/questions/761365/how-to-run-a-python-program-directly
+B} Can't execut app from files manager                          3)https://askubuntu.com/questions/761365/how-to-run-a-python-program-directly
 
