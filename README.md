@@ -106,7 +106,7 @@ you can :
 * start container.
 * stop container.
 * pause and unpause container.
-* delelet container.
+* delete container.
 * get in the container.
 
 # The Image window
