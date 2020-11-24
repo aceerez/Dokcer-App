@@ -128,7 +128,7 @@ Delete the selected image
 # Create new image 
 * Choose a Docker file 
 * Enter your image name 
-* Optinal: you can add a tag or leave emptey for tag latest
+* Optinal: you can add a tag or leave empty for tag "latest"
 * Wait for the prosses to end and then you can run it 
 
 # Download image 
