@@ -45,14 +45,16 @@ ps aux | grep -i apt
 
 
 
-make sure that evrything is insatll corectly.
+make sure that everything is insatll corectly.
 
 
-# Using the Dokcer App 
+#                                                                   Using the Dokcer App 
 # Running the app:
-Terminal - in the Main follder run the app using "python3 dockerApp.py"
+#Terminal:
+In the Main follder run the app using "python3 dockerApp.py"
 
-Files manager - first make sure that you can run files (you can use this tutrial https://askubuntu.com/questions/761365/how-to-run-a-python-program-directly)
+# Files manager:
+First make sure that you can run files (you can use this tutrial https://askubuntu.com/questions/761365/how-to-run-a-python-program-directly)
 and just run the dockerApp.py
 
 # Using the app
@@ -60,9 +62,9 @@ and just run the dockerApp.py
 The main window is splited into two , container and images.
 in the midelle there is a big botton that load all the docker data to the main windows, now you can start working . 
 
-The bar menu:
-
+# The bar menu:
 The bar menu is located in the top left of the main window and it has two menu .
+
 # File 
 # load data - load docker data to the app
 # new docker file:
@@ -80,16 +82,13 @@ edit a docker file using nano,when finished, save the file using Ctrl+O and then
 # The Containers window 
 After the data is loaded into the container window, select any container form the list and press the right mouse key to open the option menu.
 the option in the menu will change according to the container status. 
-you can : start,stop,pause and unpause,delelet and get in the container.
+
+you can :
+start,stop,pause and unpause,delelet and get in the container.
 
 # The Image window
 
 
 
 
-# Trubleshoting 
-
-   Error                                                   sulotion
-
-B} Can't execut app from files manager                          3)https://askubuntu.com/questions/761365/how-to-run-a-python-program-directly
 
