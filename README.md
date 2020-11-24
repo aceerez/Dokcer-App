@@ -72,28 +72,31 @@ The bar menu is located in the top left of the main window and it has two menus 
 # File 
 * load data:
 
-Load docker data to the app
+  Load docker data to the app
 
 * new docker file:
 
-creat a new dockerfile using nano. 
+  creat a new dockerfile using nano. 
 
-fisrt name your file and when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
-the new docker file will be placed in the dockerfiles directory.
+  fisrt name your file and when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
+  the new docker file will be placed in the dockerfiles directory.
 
 * edit docker file:
 
-edit a docker file using nano,when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
+  edit a docker file using nano,when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
 
 * Exit:
 
-Exit the App 
+  Exit the App 
 
 # Edit 
-# Delete all containers:
-* This action will DELETE ALL CONTAINERS . use it carefully.
-# Delete all Images:
-* This action will DELETE ALL Images . use it carefully.
+* Delete all containers:
+
+     This action will DELETE ALL CONTAINERS . use it carefully.
+     
+* Delete all Images:
+
+     This action will DELETE ALL Images . use it carefully.
 
 # The Containers window 
 After the data is loaded into the container window, select any container form the list and press the right mouse key to open the option menu.
