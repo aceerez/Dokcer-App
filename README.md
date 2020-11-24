@@ -132,10 +132,14 @@ Delete the selected image
 * Wait for the prosses to end and then you can run it 
 
 # Download image 
-In the popup window enter the name of the image you want to downlaod . you can press the "Search Docker Hub" botton to go dirctly to docker hub search page and from there just copy the image name to the popup window using Ctrl+V and press "Enter'
+In the popup window enter the name of the image you want to download .
+you can press the "Search Docker Hub" botton to go directly to docker hub search page and from there
+just copy the image name to the popup window using Ctrl+V and press "Enter'
 
 # Upload image 
-Let you upload the selected image to your docker hub repo.first enter your user name and then enter your password.
+Let you upload the selected image to your docker hub repo.
+
+first enter your user name and then enter your password.
 
 
 Hope you find this app helpful and i will update and upgrade it as go along 
