@@ -47,6 +47,7 @@ ps aux | grep -i apt
                                       
 
 
+* * * *
 
 make sure that everything is insatll corectly.
 
@@ -54,7 +55,7 @@ make sure that everything is insatll corectly.
 #                                                                   Using the Dokcer App 
 # Running the app:
 # Terminal:
-In the Main follder run the app using "python3 dockerApp.py"
+In the Main directory run the app using "python3 dockerApp.py"
 
 # Files manager:
 First make sure that you can run files (you can use this tutrial https://askubuntu.com/questions/761365/how-to-run-a-python-program-directly)
