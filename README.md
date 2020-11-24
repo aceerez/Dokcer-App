@@ -39,6 +39,7 @@ If you get these Errors during installation :
 
 That means that your APT service is occupied. 
 restart your machine or wait it out.
+
 NOTE: you can use this command to see APT in use.
 
 
