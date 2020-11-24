@@ -5,6 +5,8 @@
 echo Update Local Database
 sudo apt-get update
 
+chmod +x ./Main/dockerApp.py
+
 echo Download Dependencies
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 
