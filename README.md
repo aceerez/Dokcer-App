@@ -1,6 +1,8 @@
 # Dokcer-App
 this App is a Docker command features with a single click .
 
+I call this app doKCer App on purpose  :)
+
 # Introduction
 Welcome to Docker App .
 
