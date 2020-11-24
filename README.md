@@ -78,6 +78,9 @@ the new docker file will be placed in the dockerfiles directory.
 # edit docker file:
 edit a docker file using nano,when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
 
+# Exit:
+Exit the App 
+
 # Edit 
 # Delete all containers:
 * This action will DELELTE ALL CONTAINERS . use it carefully.
@@ -98,7 +101,7 @@ you can :
 # The Image window
 After the data is loaded into the Image window, select any image form the list and press the right mouse key to open the option menu.
 
-* Run image :
+# Run image 
 Creat a new container with the selected image. you can add ports to the container for cases like NGINX or Apache .
 # Upload image 
 Let you upload the selected image to your docker hub repo.first enter your user name and then enter your password.
@@ -106,9 +109,25 @@ Let you upload the selected image to your docker hub repo.first enter your user 
 wait for the upload to finish.
 
 # Delete image 
-Delelte the selected image
+Delete the selected image
 
 
+# Image option
+
+# Create new image 
+* Choose a Docker file 
+* Enter your image name 
+* Optinal: you can add a tag or leave emptey for tag latest
+* Wait for the prosses to end and then you can run it 
+
+# Download image 
+In the popup window enter the name of the image you want to downlaod . you can press the "Search Docker Hub" botton to go dirctly to docker hub search page and from there just copy the image name to the popup window using Ctrl+V and press "Enter'
+
+# Upload image 
+Let you upload the selected image to your docker hub repo.first enter your user name and then enter your password.
+
+
+Hope you find this app helpful and i will update and upgrade it as go along 
 
 
 
