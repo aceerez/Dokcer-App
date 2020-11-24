@@ -194,7 +194,8 @@ class Images:
                     elif tagName == "":
                         os.system('docker build -t="{0}" . -f {1}'.format(imageName, path))
                     else:
-                        os.system('docker build -t="{0}:{1}" . '.format(imageName, tagName))
+                        print('docker build -t="{0}:{1}" .  -f {2}'.format(imageName, tagName, path))
+                        os.system('docker build -t="{0}:{1}" .  -f {2}'.format(imageName, tagName, path))
 
                     if self.CheakListChange(cheackLen):
                         ContainerClass.Container.GetContainerList(self.cont)
@@ -244,7 +245,7 @@ class Images:
         os.system("docker tag {0} {1}/{2}".format(str(imageID).rstrip(), username, imagename))
         os.system("docker push {0}/{1}".format(username, imagename))
         self.GetImageList()
-        messagebox.showinfo("Sucsses", "Upload Image {0} Successfully to repo {1}".format(imagename, username))
+        messagebox.showinfo("Success", "Upload Image {0} Successfully to repo {1}".format(imagename, username))
 
     def DeleteImage(self):
         cheackLen = len(self.imagTreViw.get_children())
