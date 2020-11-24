@@ -14,7 +14,9 @@ I created this App for my final Project and will upgrade it as I continue to wor
 
 # Requirements
 Available Disk Space Minimum: 2 GB Recommended: 20 .
+
 Available RAM Minimum: 8 GB  Recommended: 16 . 
+
 CPU Count	Minimum: 2  Recommended 4+.
 
 # instructions
@@ -50,7 +52,7 @@ make sure that everything is insatll corectly.
 
 #                                                                   Using the Dokcer App 
 # Running the app:
-#Terminal:
+# Terminal:
 In the Main follder run the app using "python3 dockerApp.py"
 
 # Files manager:
@@ -87,9 +89,24 @@ After the data is loaded into the container window, select any container form th
 the option in the menu will change according to the container status. 
 
 you can :
-start,stop,pause and unpause,delelet and get in the container.
+* start container.
+* stop container.
+* pause and unpause container.
+* delelet container.
+* get in the container.
 
 # The Image window
+After the data is loaded into the Image window, select any image form the list and press the right mouse key to open the option menu.
+
+* Run image :
+Creat a new container with the selected image. you can add ports to the container for cases like NGINX or Apache .
+# Upload image 
+Let you upload the selected image to your docker hub repo.first enter your user name and then enter your password.
+
+wait for the upload to finish.
+
+# Delete image 
+Delelte the selected image
 
 
 
