@@ -66,7 +66,8 @@ in the midelle there is a big botton that load all the docker data to the main w
 The bar menu is located in the top left of the main window and it has two menu .
 
 # File 
-# load data - load docker data to the app
+# load data:
+Load docker data to the app
 # new docker file:
 creat a new dockerfile using nano. 
 fisrt name your file and when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
@@ -76,8 +77,10 @@ the new docker file will be placed in the dockerfiles directory.
 edit a docker file using nano,when finished, save the file using Ctrl+O and then exit using Ctrl+Z.
 
 # Edit 
-# Delete all containers - this action will DELELTE ALL CONTAINERS . use it carefully.
-# Delete all Images - this action will DELELTE ALL Images . use it carefully.
+# Delete all containers:
+* This action will DELELTE ALL CONTAINERS . use it carefully.
+# Delete all Images:
+* This action will DELELTE ALL Images . use it carefully.
 
 # The Containers window 
 After the data is loaded into the container window, select any container form the list and press the right mouse key to open the option menu.
