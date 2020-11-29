@@ -117,14 +117,17 @@ you can :
 # The Image window
 After the data is loaded into the Image window, select any image form the list and press the right mouse key to open the option menu.
 
-# Run image 
+* Run image:
+
 Creat a new container with the selected image. you can add ports to the container for cases like NGINX or Apache .
-# Upload image 
+* Upload image :
+
 Let you upload the selected image to your docker hub repo.first enter your user name and then enter your password.
 
 wait for the upload to finish.
 
-# Delete image 
+* Delete image :
+
 Delete the selected image
 
 
