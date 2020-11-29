@@ -4,7 +4,7 @@ this App is a Docker command features with a single click .
 I call this app doKCer App on purpose  :)
 
 # Introduction
-Welcome to Docker App .
+Welcome to Dokcer App .
 
 This app let you control your docker with an easy mouse click.
 All you need to do just follows this instruction and start working.
