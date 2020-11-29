@@ -15,12 +15,15 @@ If you have any comments or suggestions, please contact me.
 I created this App for my final Project and will upgrade it as I continue to work with it and add more features.
 
 # Requirements
-Available Disk Space Minimum: 2 GB Recommended: 20 .
+* Linux Machine 
 
-Available RAM Minimum: 8 GB  Recommended: 16 . 
+* Available Disk Space Minimum: 2 GB Recommended: 20 .
 
-CPU Count	Minimum: 2  Recommended 4+.
+* Available RAM Minimum: 8 GB  Recommended: 16 . 
 
+* CPU Count	Minimum: 2  Recommended 4+.
+
+NOTE: This App can not run with Putty . if you want to run it with putty You need to run an X server on your windows machine and then enable X11 forwarding in your putty session before you log in (see the Connection / SSH / X11 property page in PuTTY). In the past I've used Xming which is free and eXceed which was not. Once you have an X server on the machine you actually are looking at and forward the X connection over the ssh link, it will setup the DISPLAY environment variable on the remote machine so that X clients can communicate back to the display server. Otherwise, without a DISPLAY setup Tk will raise an error - as you will see if you try to run it on putty .
 # instructions
 
 INSTALL App & components
